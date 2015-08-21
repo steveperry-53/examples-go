@@ -1,2 +1,5 @@
 # examples-go
-A sequence of examples written in Go
+
+### 01-hello-world 
+
+Prints Hello World.
