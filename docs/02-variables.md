@@ -1,4 +1,5 @@
 `go install github.com/steveperry-53/examples-go/02-variables`
+
 `$GOPATH/bin/02-variables`
 
 Demonstrates how to declare, initialize, and print variables
