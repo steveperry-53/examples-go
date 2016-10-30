@@ -9,7 +9,7 @@ package from the
 Calls the
 [fmt.Println](https://golang.org/pkg/fmt/#Println) function.
 
-### Building and running the program
+## Building and running the program
 
 On your development machine, create a $HOME/work directory.
 Set $GOPATH to $HOME/work.
@@ -52,5 +52,3 @@ In general in Go, a directory corresponds to a package.
 
 * [About the Go command](https://golang.org/doc/articles/go_command.html)
 * [Command go](https://golang.org/cmd/go/)
-    
-
