@@ -36,7 +36,7 @@ To run the executable, enter this command:
 
     $GOPATH/bin/01-hello-world
 
-# Notes
+## Notes
 
 The `go install` command takes a directory, not a file.
 And it produces an executable file with the same name as the directory,
