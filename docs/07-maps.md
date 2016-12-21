@@ -65,10 +65,10 @@ has type Motorcycle.
       cc int  // engine size in cubic centimeters
     }
 
-  racers := map[string]Motorcycle{
-    "Bob": {"Suzuki", "Vstrom", 650},
-    "Fred": {"Honda", "CBR", 900},
-    "Harry": {"Kawasaki", "Ninja", 250},
-  }
+    racers := map[string]Motorcycle{
+      "Bob": {"Suzuki", "Vstrom", 650},
+      "Fred": {"Honda", "CBR", 900},
+      "Harry": {"Kawasaki", "Ninja", 250},
+    }
 
-  fmt.Println("Bob rides a", racers["Bob"].make, racers["Bob"].model, "with a", racers["Bob"].cc, "cc engine.")
+    fmt.Println("Bob rides a", racers["Bob"].make, racers["Bob"].model, "with a", racers["Bob"].cc, "cc engine.")
