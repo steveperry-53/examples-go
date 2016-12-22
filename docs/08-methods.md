@@ -1,4 +1,4 @@
-# maps.go
+# methods.go
 
 Demonstrates how to define methods on types.
 
