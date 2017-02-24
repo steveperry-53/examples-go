@@ -1,0 +1,10 @@
+Notes on import paths
+https://medium.com/@c9s/golang-the-annoying-remote-import-path-c6c7e76517e5#.e8bfynkg1
+
+Standard library
+Package: https://golang.org/pkg/fmt
+Base path: https://golang.org/pkg/
+Import path: fmt
+
+My code
+Base path (I think): https://github.com/steveperry-53/examples-go
