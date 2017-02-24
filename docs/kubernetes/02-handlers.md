@@ -185,22 +185,42 @@ Finally, I think we have the function that writes the response.
 I'm just getting used to this idea of passing functions around.
 I think this is what's happening.
 
-A is a function that take a function and returns a function.
+Suppose A is a function that take a function and returns a function.
 Suppose, for example, A returns a function that is better than the input function.
 
 B is also a function that takes a function and returns a better function.
 
 Suppose f is a function that does a certain job, but not very well.
 
-Let g = fA. Or we could write g = A(f).
+g = A(f).
 
 Now g does a pretty good job, but we want a function that does an even better job.
 
-Let h = gB. Or we could write h = B(g).
+h = B(g).
 
 Finally, we have the function h, which does the job really well.
 
-h = fAB. Or we could write h = B(A(f)).
+h = B(A(f)).
+
+In the Kubernetes example above, the situation is a bit more complex.
+
+Start with a function f that is not even a handler. It has the wrong parameters and returns the wrong type.
+
+Suppose A takes a scope and the function f, and returns a function g.
+
+g = A(scope, f)
+
+g happens to be a handler, but we want a fancier handler h.
+
+So now B takes a verb, a resource, and a function g, and returns a function h.
+
+h = B(verb, resource, g)
+
+We could combine the steps like this:
+
+h = B[ verb, resource, A(scope, f) ]
+
+
 
 
 
