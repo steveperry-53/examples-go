@@ -180,6 +180,28 @@ Look at `getResourceHandler`.
 
 Finally, I think we have the function that writes the response.
 
+## Notes
+
+I'm just getting used to this idea of passing functions around.
+I think this is what's happening.
+
+A is a function that take a function and returns a function.
+Suppose, for example, A returns a function that is better than the input function.
+
+B is also a function that takes a function and returns a better function.
+
+Suppose f is a function that does a certain job, but not very well.
+
+Let g = fA. Or we could write g = A(f).
+
+Now g does a pretty good job, but we want a function that does an even better job.
+
+Let h = gB. Or we could write h = B(g).
+
+Finally, we have the function h, which does the job really well.
+
+h = fAB. Or we could write h = B(A(f)).
+
 
 
 
