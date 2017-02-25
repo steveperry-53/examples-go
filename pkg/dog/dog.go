@@ -1,10 +1,10 @@
 package dog
 
 type Dog struct {
-	name string
-	weight int
+	Name string
+	Pounds int
 }
 
-func (d Dog) Weight int {
-	return d.weight
+func (d Dog) Weight () int {
+	return d.Pounds
 }
