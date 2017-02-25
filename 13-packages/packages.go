@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/steveperry-53/examples-go/13-packages/pkg/dog"
+	"github.com/steveperry-53/examples-go/pkg/dog"
 )
 
 func main() {
