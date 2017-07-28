@@ -1,6 +1,6 @@
 # packages.go
 
-Demonstrates Go packages.
+Demonstrate Go packages.
 
 ## Building and running the program
     
