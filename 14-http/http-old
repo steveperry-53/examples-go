@@ -1,0 +1,134 @@
+
+////////// SEE THIS
+//https://stackoverflow.com/questions/38496919/googlecredential-created-by-json-private-key-file-serviceaccount-how-to-set
+//https://kb.netapp.com/support/s/article/ka31A00000010rlQAA/how-to-extract-a-ssl-pem-private-key-from-a-json-formatted-google-service-account-key?language=en_US
+
+
+
+
+echo -n $MSG | 
+
+openssl dgst -sha256 -hmac "secret" -binary | 
+
+base64
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"os"
+	"time"
+	"github.com/dgrijalva/jwt-go"
+	"strings"
+)
+
+func main() {
+	// firstTry()
+	secondTry()
+}
+
+func firstTry() {
+	client := &http.Client{}
+	req, _ := http.NewRequest("GET", "https://www.googleapis.com/discovery/v1/apis/urlshortener/v1/rest", nil)
+	req.Write(os.Stdout)
+	resp, _ := client.Do(req)
+	resp.Write(os.Stdout)
+}
+
+
+func secondTry() {
+//	rsaPrivateKey := `MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDD33I79lvZMbDS\njey9iget0ZxA7Zo7pKbxjY+S4OQL/cnIL/HdclK2+BBKYKI6JVvxIOsj9h9PKwdO\nxUIrQfWWFgPQwu9b3yQyb1F8clLrRk8kJl02bXs6S+OKWICKnQ6NCURFYg/1rSmf\nSTuBTAsRjv6/zIUb85WHQx39hDuxgbXzzNSFpzLt6oep/dxga19+aYlYEZxImuG3\nwRhZkCL3uBhB0fAyVuOG4E10OvEgrRvo6UbViuW1gl7afZAkoiqk4VLPG/M29zmF\nwEXr7QQKFav1qhDrUlnkRSamqmw5CeeFksepFLO1mQ2khO3W3nR1giuqlZGqiMQp\nq6f+LwXFAgMBAAECggEADb9tUd6qm/gedFjTyNObLhXi8rVoSuFjMSTK4Ioe6cEf\nE0ASOxd6X5z2f7+k3rZ6kEPwOIoVZ6E+zQ+QLKjNOYLVxW+5MWiTCfacy/ltE589\nkDZpsU5qu56bG722xIPdzE05fVbpqdqN/lI7Y/dqQAn1wNn0blkXtBckT99ZsKjy\narVe2DxeE8q04n+s0GwXcGrBTVnGQIcSPYPJ6YIV+kDOukZoPtU5h2+zeeVruSM9\nGilSiAvyjTTbWIrdBTgMFcW+pCZ00Eh/qLUxLobCQoSXOZaRUO3yrs9KLGxSL2aS\n7rfIzXYIl9+wKHPiio5YHAHPBKxqe4O5ovejbrcRjQKBgQDmsFhSkyMoAGA4+A+q\n/kOT6IDKRaRjOIhpVRdrE13R9ChoO4w+D17h0Q1DT2kEZ7CfZpAd292VVyQMTywr\nQ2gEujMLhga+CXtJ8EFT908+IBfUP/Ta/sdYwZYMJWrXGH3xHWEu/YR20qF5jEBX\ndVisP4fNnlNN9978Ds3xWSIiewKBgQDZXS3WC9/MbXoM9NO7YDZ6za/6p9A4tD/C\n+AEkGkUTm9mrKYBp3lpoD4yskoDyEvT3un7OoOPswWbWqw+SZm1RH0Rs8faRe3Qp\n15TMprpeBEK1cN4ZBRhzVbpk7hyXDwd2vpuzC15qp7hENSx7TwEQ7lL9pwAPNlIi\nXmwsUzokvwKBgFiNVsoTywn+4vDbYABObBhpxo5en1SrDcoJLN0gaQJADAa+3P2x\nnsVmHwY4hGJ5fxYhI68ih/NcqOzEs3rD/DjcVN3Wi94E+7uNKzaVF2kMnrkN9+rc\npB8Q6I0vC80XjLiyg2yrSl7mSa/Dw6sO04QDOxkV7npebM0qzakYgv7jAoGAHRf/\nvpqwReiRYZKTlIz4Pc+yMlar5CscLbiMTozFmi5OID7Z1VHRwAP0zFR/tecbqtzn\nhDi8yT/JyAn1d58GGsmYmwx3+FkR31ffrtTSNStU0nxc/fRUpXtgC4pjgUSdtyMk\nK/7lkFkKrPaBEbAtcFq1+QWVWHPo4njI+dXZ/nkCgYAbK37WlYZBmjEH+oa/Wn9n\ns2WLK4o6/vBfQr4579awp0TBGdjtkAC/NTl0OF/hrYlVeaxZp+nzuFupZnahyLVt\nhE+ED5litAvj415vUEcr1MvgQ7tr4kHp5XDDq3D0JbWp8hx8NsgYT3HuYAG2406d\nzMsIrWNXfPgFb9skqmMyEA==`
+
+	// Sign the UTF-8 representation of the input using SHA256withRSA (also known as RSASSA-PKCS1-V1_5-SIGN with the SHA-256
+	// hash function) with the private key obtained from the Google API Console. 
+
+	// This next call is not right. We can't use HS256. We must us RS256 (RSA Signature with SHA-256).
+	// https://stackoverflow.com/questions/39239051/rs256-vs-hs256-whats-the-difference
+
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, jwt.MapClaims{
+		"iss":"auth-experiment@steve-70.iam.gserviceaccount.com",
+		"aud":"https://accounts.google.com/o/oauth2/token",
+  	"scope":"https://www.googleapis.com/auth/compute.readonly",	
+    	"iat": time.Now().Unix(),
+		"exp": time.Now().Add(time.Second * 3600).Unix(),
+	})
+
+	jwtString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJleHAiOjE0OTc4NDAxOTYsImlhdCI6MTQ5NzgzNjU5NiwiaXNzIjoiYXV0aC1leHBlcmltZW50QHN0ZXZlLTcwLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwic2NvcGUiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL2NvbXB1dGUucmVhZG9ubHkifQ.8dc1454209d85e68a25bd812676787164d77d82be150f9c4aaf495530d8234f4"
+
+	jwtString, err := token.SignedString([]byte(rsaPrivateKey))
+	fmt.Println()
+	fmt.Println("SignedString Error")
+	fmt.Println(err)
+	fmt.Println()
+	fmt.Println(jwtString)
+	fmt.Println()
+
+
+	// https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+
+	// https://github.com/northbright/go-post-example/blob/master/client/main.go
+
+	// POST /oauth2/v4/token HTTP/1.1
+	// Host: www.googleapis.com
+	// Content-Type: application/x-www-form-urlencoded
+
+	// grant_type	Use the following string, URL-encoded as necessary: urn:ietf:params:oauth:grant-type:jwt-bearer
+	// assertion	The JWT, including signature.
+
+	// Note: %3A is a url-encoded colon
+
+	// grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer & assertion=eyJhb...
+
+	// https://stackoverflow.com/questions/20065304/what-is-the-differences-between-begin-rsa-private-key-and-begin-private-key
+
+    tokenRequestBody := "grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion="+jwtString
+
+	// tokenRequestBody := jwtString
+
+	fmt.Println(tokenRequestBody)
+	fmt.Println()
+
+	// https://accounts.google.com/o/oauth2/token
+
+	// Audience:  https://accounts.google.com/o/oauth2/token
+
+	req, err := http.NewRequest("POST", "https://accounts.google.com/o/oauth2/token", strings.NewReader(tokenRequestBody))
+	req.Header.Add("Content-Type",  "application/x-www-form-urlencoded")
+	//req.Write(os.Stdout)
+	fmt.Println()
+	fmt.Println(err)
+
+	fmt.Println()
+
+	c := &http.Client{}
+	resp, err := c.Do(req)
+
+	fmt.Println()
+	fmt.Println("Error")
+	fmt.Println(err)
+	fmt.Println()
+	fmt.Println("Response")
+	resp.Write(os.Stdout)
+}
