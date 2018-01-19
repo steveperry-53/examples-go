@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"encoding/json"
+	"strings"
 )
 
 type Thing struct {
@@ -11,31 +12,33 @@ type Thing struct {
 }
 
 func main() {
-	fmt.Println("Hello json")
 
-	var th Thing
-
+	// Suppose we have a JSON file that has this data.
+	// Notice that the less-than sign is encoded as the escape sequence \u003c.
 	stData := "{\"Name\":\"stick\",\"Description\":\"Length is \\u003c 2.\"}"
-
 	data := []byte(stData)
 
+	// Now suppose we unmarshal the JSON data to type Thing.
+	var th Thing
 	json.Unmarshal(data, &th)
 
-	fmt.Println()
-	fmt.Println("stData")
-	for j := 0; j < len(stData); j++ {
-		fmt.Printf("%c %x\n", stData[j], stData[j])
-	}
+	// Now th.Description has a regular less-than character. 0x3c
+	// That is, the less-than character is not escaped.
 
-	fmt.Println()
-	fmt.Println("data")
-	for j:= 0; j < len(data); j++ {
-		fmt.Printf("%c %x\n", data[j], data[j])
-	}
+	// But suppose wwe want th.Description to have an escape sequence for the less-than. \u003c
 
-	fmt.Println()
-	fmt.Println("th.Description")
-	for j:= 0; j < len(th.Description); j++ {
-		fmt.Printf("%c %x\n", th.Description[j], th.Description[j])
-	}
+	var marshDesc []byte
+	marshDesc, _ = json.Marshal(th.Description)
+	strMarshDesc := string(marshDesc)
+
+	// This is good. strMarshDesc has an escape sequence for the less-than.
+	// The only problem is that the first and last characters of strMarshDesc are quote characters.
+
+	// Trim the leading and trailing quotes.
+	strMarshDesc = strings.TrimPrefix(strMarshDesc, "\"")
+	strMarshDesc = strings.TrimSuffix(strMarshDesc, "\"")
+	th.Description = strMarshDesc
+
+	// Now th.Description is what we want. It is a string that has an escape sequence for the less-than.
+	fmt.Println(th.Description)
 }
