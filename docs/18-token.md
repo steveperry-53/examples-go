@@ -24,7 +24,7 @@ To run the executable, enter this command:
 
 Create a GCP service account, and download a JSON key file.
 
-This program reads the JSON key file, and produces and access
+This program reads the JSON key file, and produces an access
 token that you can use to call BigQuery APIs.
 
 We call CredentialsFromJSON to get a Credentials object.
