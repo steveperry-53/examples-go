@@ -27,7 +27,14 @@ The output of this program is
 <base64-encoded header>.<base-64 encoded claim set>
 
 Sign the output.
+Sign the UTF-8 representation of the input using SHA256withRSA
+(also known as RSASSA-PKCS1-V1_5-SIGN with the SHA-256 hash function)
+
+My best guess for using openssl:
+openssl dgst -sha256 -sign prikey.pem -out sign.sha256 <file>
+
 Base64 encode the signature.
+openssl base64 -in sign.sha256 -out sig-64
 
 Then create this JWT:
 <base64-encoded header>.<base-64 encoded claim set>.<base64-encoded signature>
@@ -44,5 +51,14 @@ OR
 
 curl -d 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=<jwt>
 ' https://oauth2.googleapis.com/token
+
+Problem:
+{
+  "error": "invalid_grant",
+  "error_description": "Invalid JWT Signature."
+}
+
+I get this error even though I verified the signature locally.
+
 
 
