@@ -21,10 +21,9 @@ func main() {
 
 	var tknSrc oauth2.TokenSource
 	tknSrc = creds.TokenSource
-	fmt.Println(tknSrc)
 	
 	var tkn *oauth2.Token
 	tkn, _ = tknSrc.Token()
 
-	fmt.Println("\n\ntkn:", (*tkn).AccessToken)
+	fmt.Println("\n\ntkn:", tkn.AccessToken)
 }
